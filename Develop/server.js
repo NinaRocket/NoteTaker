@@ -14,6 +14,7 @@ app.use(express.json());
 
 //route file, a map of how to respond when users visit or request data from the URLs
 require("./routes/apiRoutes")(app);
+require("./routes/htmlRoutes")(app);
 
 //port listener, starts server
 
