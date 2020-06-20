@@ -5,9 +5,7 @@ const noteData = require("../db/db.json");
 //const 
 
 const fs = require('fs');
-//ROUTING
-
-//const router = express.Router();
+let id = noteData.length + 1;
 
 module.exports = function (app) {
 
@@ -16,8 +14,7 @@ module.exports = function (app) {
 
     app.get("/api/notes", function (req, res) {
 
-        let rawdata = fs.readFileSync("db/db.json", "utf8");
-        res.json(rawdata);
+        res.json(noteData);
     });
 
     //API POST requests
@@ -27,14 +24,17 @@ module.exports = function (app) {
 
     app.post("/api/notes", function (req, res) {
 
-        //let rawdata = fs.readFileSync("db/db.json", "utf8");
-
-
         const data = req.body;
+        //adding ID to note
+        data.id = id++;
+        while (noteData.includes(id)) {
+            id++;
+        };
+
         //read file
         //let rawdata = fs.readFileSync("db/db.json", "utf8");
         noteData.push(data);
-        fs.writeFile("db/db.json", JSON.stringify(rawdata), (err) => {
+        fs.writeFile("db/db.json", JSON.stringify(noteData), (err) => {
             if (err)
                 console.log(err);
             else {
@@ -43,17 +43,12 @@ module.exports = function (app) {
                 console.log(fs.readFileSync("db/db.json", "utf8"));
             }
         });
-        //adding ID to note
-
-        data.id = 1;
-
-
-        //noteData.push(data);
-
         res.json(true);
     });
 
     app.delete("/api/notes/:id", function (req, res) {
+        //target id in array and then delete, filter
+        noteData.splice(id);
 
     });
 };
