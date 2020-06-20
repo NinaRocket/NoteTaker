@@ -1,8 +1,8 @@
 //linking routes to data sources
 const express = require('express');
 //const path = require("path");
-const noteData = require("../data/noteData");
-
+const noteData = require("../db/db.json");
+//const 
 
 const fs = require('fs');
 //ROUTING
@@ -15,12 +15,10 @@ module.exports = function (app) {
     //handles user visiting a page
 
     app.get("/api/notes", function (req, res) {
-        res.json(noteData);
-        let rawdata = fs.readFileSync("db/db.json");
-        console.log(rawdata);
+
+        let rawdata = fs.readFileSync("db/db.json", "utf8");
+        res.json(rawdata);
     });
-
-
 
     //API POST requests
     // POST request
@@ -29,7 +27,29 @@ module.exports = function (app) {
 
     app.post("/api/notes", function (req, res) {
 
-        noteData.push(req.body);
+        //let rawdata = fs.readFileSync("db/db.json", "utf8");
+
+
+        const data = req.body;
+        //read file
+        //let rawdata = fs.readFileSync("db/db.json", "utf8");
+        noteData.push(data);
+        fs.writeFile("db/db.json", JSON.stringify(rawdata), (err) => {
+            if (err)
+                console.log(err);
+            else {
+                console.log("File written successfully\n");
+                console.log("The written has the following contents:");
+                console.log(fs.readFileSync("db/db.json", "utf8"));
+            }
+        });
+        //adding ID to note
+
+        data.id = 1;
+
+
+        //noteData.push(data);
+
         res.json(true);
     });
 

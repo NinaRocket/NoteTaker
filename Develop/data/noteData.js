@@ -1,10 +1,6 @@
 //DATA - hold notes
 
-const noteDataArray = [
-    {
-        title: "",
-        text: ""
-    }];
+const noteDataArray = [];
 
 
 module.exports = noteDataArray;
