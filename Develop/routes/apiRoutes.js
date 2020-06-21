@@ -39,16 +39,43 @@ module.exports = function (app) {
                 console.log(err);
             else {
                 console.log("File written successfully\n");
-                console.log("The written has the following contents:");
-                console.log(fs.readFileSync("db/db.json", "utf8"));
             }
         });
         res.json(true);
     });
 
     app.delete("/api/notes/:id", function (req, res) {
-        //target id in array and then delete, filter
-        noteData.splice(id);
 
+        const noteID = parseInt(req.params.id);
+        //noteData.filter(noteID);
+        //target id in array and then delete, filter
+        // const data = req.body;
+
+        // while (noteData.includes(id)) {
+        //     noteData.splice(noteData.id);
+        // };
+        const arrayID = noteData.filter((notes, index) => {
+            console.log(notes.id);
+            return noteID !== notes.id;
+        });
+        fs.writeFile("db/db.json", JSON.stringify(arrayID), (err) => {
+            if (err)
+                console.log(err);
+            else {
+                console.log("File written successfully\n");
+            }
+        });
+        console.log(noteData);
+        res.json(noteData);
+
+        console.log(arrayID);
+
+        // //let arrayID = noteData.filter(id);
+        // noteData.splice(arrayID);
+        // while (noteData.indexOf(id) !== -1) {
+        //     noteData.splice(noteData.indexOf(id), 1);
+        // }
+
+        //res.json({ ok: true });
     });
 };
