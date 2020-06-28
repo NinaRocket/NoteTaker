@@ -14,8 +14,8 @@ app.use(express.json());
 app.use(express.static('public'));
 
 //route file, a map of how to respond when users visit or request data from the URLs
-require("./Develop/routes/apiRoutes")(app);
-require("./Develop/routes/htmlRoutes")(app);
+require("./routes/apiRoutes")(app);
+require("./routes/htmlRoutes")(app);
 
 //port listener, starts server
 app.listen(PORT, function () {
